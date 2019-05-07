@@ -15,6 +15,7 @@
 		C9554268227EABCD00725AD3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C9554267227EABCD00725AD3 /* main.m */; };
 		C9554272227EABCD00725AD3 /* PlayImageTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9554271227EABCD00725AD3 /* PlayImageTests.m */; };
 		C955427D227EABCD00725AD3 /* PlayImageUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = C955427C227EABCD00725AD3 /* PlayImageUITests.m */; };
+		C955428C227EB29C00725AD3 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C955428B227EB29C00725AD3 /* FirstViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,8 @@
 		C9554278227EABCD00725AD3 /* PlayImageUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlayImageUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C955427C227EABCD00725AD3 /* PlayImageUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlayImageUITests.m; sourceTree = "<group>"; };
 		C955427E227EABCD00725AD3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C955428A227EB29C00725AD3 /* FirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
+		C955428B227EB29C00725AD3 /* FirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +108,8 @@
 				C9554259227EABCC00725AD3 /* AppDelegate.m */,
 				C955425B227EABCC00725AD3 /* ViewController.h */,
 				C955425C227EABCC00725AD3 /* ViewController.m */,
+				C955428A227EB29C00725AD3 /* FirstViewController.h */,
+				C955428B227EB29C00725AD3 /* FirstViewController.m */,
 				C955425E227EABCC00725AD3 /* Main.storyboard */,
 				C9554261227EABCD00725AD3 /* Assets.xcassets */,
 				C9554263227EABCD00725AD3 /* LaunchScreen.storyboard */,
@@ -265,6 +270,7 @@
 				C955425D227EABCC00725AD3 /* ViewController.m in Sources */,
 				C9554268227EABCD00725AD3 /* main.m in Sources */,
 				C955425A227EABCC00725AD3 /* AppDelegate.m in Sources */,
+				C955428C227EB29C00725AD3 /* FirstViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -436,7 +442,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4679Q79YV9;
 				INFOPLIST_FILE = PlayImage/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -452,7 +460,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4679Q79YV9;
 				INFOPLIST_FILE = PlayImage/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
