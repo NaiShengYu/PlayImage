@@ -8,6 +8,9 @@
 #import <AVFoundation/AVFoundation.h>
 #import "ViewController.h"
 #import "FirstViewController.h"
+#import <HealthKit/HealthKit.h>
+#define imgSizeW 1536.0
+#define imgSizeH 2048.0
 #define kScreenBounds   [UIScreen mainScreen].bounds
 #define kScreenWidth  kScreenBounds.size.width*1.0
 #define kScreenHeight kScreenBounds.size.height*1.0
@@ -45,8 +48,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-   
+
     _canCa = [self canUserCamear];
     if (_canCa) {
         [self customCamera];
@@ -60,11 +62,6 @@
     imageV.frame = CGRectMake(0, 0, kScreenWidth, kScreenHeight);
     imageV.contentMode = UIViewContentModeScaleToFill;
     [self.view addSubview:imageV];
-    
-    UIImageView * imageV2 = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"333"]];
-    imageV2.frame = CGRectMake(0, 0, kScreenWidth, kScreenHeight);
-    imageV2.contentMode = UIViewContentModeScaleToFill;
-    [self.view addSubview:imageV2];
     
     for (int i = 0; i <8; i ++) {
         UIImageView *imgView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 0, 0)];
@@ -91,8 +88,8 @@
 
 - (void)customUI{
     _PhotoButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    _PhotoButton.center = CGPointMake(kScreenWidth/2, kScreenHeight-490*kScreenHeight/2560.0);
-    _PhotoButton.bounds =CGRectMake(0, 0, 580*kScreenWidth/1440.0, 480*kScreenHeight/2560.0);
+    _PhotoButton.center = CGPointMake(kScreenWidth/2-20, kScreenHeight-420*kScreenHeight/imgSizeH);
+    _PhotoButton.bounds =CGRectMake(0, 0, 440*kScreenWidth/imgSizeW, 380*kScreenHeight/imgSizeH);
 //    _PhotoButton.backgroundColor = [UIColor orangeColor];
     [_PhotoButton addTarget:self action:@selector(shutterCamera) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_PhotoButton];
@@ -282,12 +279,14 @@
     
 }
 #pragma mark - 截取照片
-- (void) shutterCamera
+- (void)shutterCamera
 {
     [_timer invalidate];
 
     UIImage *img = [UIImage imageNamed:@"111"];
     FirstViewController *firstVC = [[FirstViewController alloc]init];
+//    firstVC.img = img;
+//    [self presentViewController:firstVC animated:YES completion:nil];
     
     AVCaptureConnection * videoConnection = [self.ImageOutPut connectionWithMediaType:AVMediaTypeVideo];
     if (!videoConnection) {
@@ -437,10 +436,10 @@
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     [formatter setDateFormat:@"HH:mm:ss"];
     NSString *datestr = [formatter stringFromDate:nowDate];
-    CGFloat NumImageX = w*310/1440.0;
-    CGFloat NumImageY = h*110/2560.0;
-    CGFloat NumImageH = h*160/2560.0;
-    CGFloat imgw = (820.0/1440.0*w)/datestr.length/1.0;
+    CGFloat NumImageX = w*430/imgSizeW;
+    CGFloat NumImageY = h*100/imgSizeH;
+    CGFloat NumImageH = h*120/imgSizeH;
+    CGFloat imgw = (660.0/imgSizeW*w)/datestr.length/1.0;
 
     CGFloat b = 0.0;
     for (int i =0; i <datestr.length; i ++) {
@@ -469,12 +468,12 @@
     [formatter setDateFormat:@"HH:mm:ss"];
     NSString *datestr = [formatter stringFromDate:nowDate];
     
-    CGFloat NumImageX = kScreenWidth*310/1440.0;
-    CGFloat NumImageY = kScreenHeight*120/2560.0;
-    CGFloat NumImageH = kScreenHeight*160/2560.0;
+    CGFloat NumImageX = kScreenWidth*430/imgSizeW;
+    CGFloat NumImageY = kScreenHeight*100/imgSizeH;
+    CGFloat NumImageH = kScreenHeight*120/imgSizeH;
 
     CGFloat b = 0.0;
-    CGFloat imgw =(820.0/1440.0*kScreenWidth)/datestr.length/1.0;
+    CGFloat imgw =(660.0/imgSizeW*kScreenWidth)/datestr.length/1.0;
     for (int i =0; i <datestr.length; i ++) {
         UIImageView *imgV = [self.view viewWithTag:i+1000];
         NSString *numImgName =[datestr substringWithRange:NSMakeRange(i, 1)];

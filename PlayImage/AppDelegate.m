@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-
+#import <AFNetworking.h>
 @interface AppDelegate ()
 
 @end
@@ -17,6 +17,15 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
+    [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        if (status ==AFNetworkReachabilityStatusNotReachable) {
+            NSLog(@"网络连接不上");
+        }else{
+        }}];
+    
+    
     return YES;
 }
 
