@@ -10,6 +10,7 @@
 
 #import "FirstViewController.h"
 #import <AFNetworking.h>
+#import <SVProgressHUD.h>
 #define imgSizeW 1536.0
 #define imgSizeH 2048.0
 #define WS(blockSelf) __weak __typeof(&*self)blockSelf = self;
@@ -42,7 +43,7 @@
     [self.view addSubview:but];
     
     UIButton *but1 =[[UIButton alloc]initWithFrame:CGRectMake( kScreenWidth-465.0*kScreenWidth/imgSizeW, kScreenHeight-410*kScreenHeight/imgSizeH, 390*kScreenWidth/imgSizeW, 105*kScreenHeight/imgSizeH)];
-    [but1 addTarget:self action:@selector(upImage) forControlEvents:UIControlEventTouchUpInside];
+    [but1 addTarget:self action:@selector(upImage:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:but1];
     
     _QRCoreImageV = [[UIImageView alloc]initWithFrame:CGRectMake(kScreenWidth-376.0*kScreenWidth/imgSizeW, kScreenHeight-(852)*kScreenHeight/imgSizeH, 220*kScreenWidth/imgSizeW, 220*kScreenWidth/imgSizeW)];
@@ -52,20 +53,23 @@
     
 }
 
-- (void)upImage{
-
+- (void)upImage:(UIButton *)but{
+    
     if (self.QRCoreImageV.image !=nil) {
+        [SVProgressHUD setMaximumDismissTimeInterval:0.9];
+        [SVProgressHUD showErrorWithStatus:@"您已经上传了"];
         return;
     }
-    
+    but.enabled = NO;
+    [SVProgressHUD showWithStatus:@"上传中。。。"];
     WS(blockSelf);
     NSString *url = @"http://f.jianxinnet.com/cmj/api.php";
     NSMutableDictionary *param = [[NSMutableDictionary alloc]init];
     [param setObject:@"img_upload" forKey:@"app"];
     [param setObject:@"img" forKey:@"img"];
 
-    NSData *data =UIImageJPEGRepresentation(self.img, 1);
-
+    NSData *data =[self compressQualityWithMaxLength:500*1024 img:self.img];
+    NSLog(@"上传的长度=%f",data.length/2014.0);
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer =[AFHTTPResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html",@"text/plain", nil];
@@ -83,10 +87,13 @@
         NSDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingAllowFragments error:nil];
         
         self.QRCoreImageV.image = [self createQRCodeWithData:resultDic[@"data"] logoImage:nil imageSize:500];
+        but.enabled = YES;
 
-        
+        [SVProgressHUD dismiss];
 
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        but.enabled = YES;
+        [SVProgressHUD dismiss];
 
     }];
 }
@@ -180,18 +187,40 @@
 - (void)image: (UIImage *) image didFinishSavingWithError: (NSError *) error contextInfo: (void *) contextInfo
 
 {
-    NSString *msg = nil ;
-    if(error != NULL){
-        msg = @"保存图片失败" ;
-    }else{
-        msg = @"保存图片成功" ;
+//    NSString *msg = nil ;
+//    if(error != NULL){
+//        msg = @"保存图片失败" ;
+//    }else{
+//        msg = @"保存图片成功" ;
+//    }
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"保存图片结果提示"
+//                                                    message:msg
+//                                                   delegate:self
+//                                          cancelButtonTitle:@"确定"
+//                                          otherButtonTitles:nil];
+//    [alert show];
+}
+
+
+#pragma mark -- 压缩图片
+- (NSData *)compressQualityWithMaxLength:(NSInteger)maxLength img:(UIImage *)img{
+    CGFloat compression = 1.0;
+    NSData *data = UIImageJPEGRepresentation(img, compression);
+    if (data.length < maxLength) return data;
+    CGFloat max = 1.0;
+    CGFloat min = 0;
+    for (int i = 0; i < 6; ++i) {
+        compression = (max + min) / 2;
+        data = UIImageJPEGRepresentation(img, compression);
+        if (data.length < maxLength * 0.9) {
+            min = compression;
+        } else if (data.length > maxLength) {
+            max = compression;
+        } else {
+            break;
+        }
     }
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"保存图片结果提示"
-                                                    message:msg
-                                                   delegate:self
-                                          cancelButtonTitle:@"确定"
-                                          otherButtonTitles:nil];
-    [alert show];
+    return data;
 }
 
 @end

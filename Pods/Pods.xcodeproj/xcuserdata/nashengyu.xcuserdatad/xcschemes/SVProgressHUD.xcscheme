@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B86B5D9D10E1727C5BF516C45658791D"
-               BlueprintName = "Pods-PlayImage"
+               BlueprintIdentifier = "EB49166C8EED9FEFF9F40BF0CEBF5F3D"
+               BlueprintName = "SVProgressHUD"
                ReferencedContainer = "container:Pods.xcodeproj"
-               BuildableName = "libPods-PlayImage.a">
+               BuildableName = "libSVProgressHUD.a">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
