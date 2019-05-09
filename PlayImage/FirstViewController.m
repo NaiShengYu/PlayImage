@@ -43,7 +43,7 @@
     
     
     _but =[[UIButton alloc]initWithFrame:CGRectMake( kScreenWidth-465.0*kScreenWidth/imgSizeW, kScreenHeight-540*kScreenHeight/imgSizeH, 390*kScreenWidth/imgSizeW, 105*kScreenHeight/imgSizeH)];
-    [_but addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+    [_but addTarget:self action:@selector(back1) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_but];
     
     _but1 =[[UIButton alloc]initWithFrame:CGRectMake( kScreenWidth-465.0*kScreenWidth/imgSizeW, kScreenHeight-410*kScreenHeight/imgSizeH, 390*kScreenWidth/imgSizeW, 105*kScreenHeight/imgSizeH)];
@@ -112,13 +112,12 @@
     }];
 }
 
-
-
-
+- (void)back1{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 - (void)back{
-    
-    [self dismissViewControllerAnimated:YES completion:nil];    
+    [self.presentingViewController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 //之后只需要实例化一个CIFilter的对象, 给该对象添加数据后生成二维码即可

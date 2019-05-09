@@ -80,7 +80,7 @@
     NSLog(@"o=%f/np=%f/nr=%f/ns=%f",o,p,r,s);
     _lab1 = [[UILabel alloc]initWithFrame:CGRectMake(550*kScreenWidth/imgSizeW, kScreenHeight-520*kScreenHeight/imgSizeH, 320*kScreenWidth/imgSizeW, 80*kScreenHeight/imgSizeH)];
     _lab1.textColor = [UIColor whiteColor];
-    _lab1.font = [UIFont fontWithName:@"Arial Rounded MT Bold"  size:100];
+    _lab1.font = [UIFont fontWithName:@"PledgeBlack"  size:100];
     _lab1.adjustsFontSizeToFitWidth = YES;
     _lab1.text = @"你向未来";
     [self.view addSubview:_lab1];
@@ -88,8 +88,8 @@
     _timeLab = [[UILabel alloc]initWithFrame:CGRectMake(550*kScreenWidth/imgSizeW, kScreenHeight-420*kScreenHeight/imgSizeH, 320*kScreenWidth/imgSizeW, 80*kScreenHeight/imgSizeH)];
     _timeLab.adjustsFontSizeToFitWidth = YES;
     _timeLab.textColor = [UIColor whiteColor];
-    _timeLab.text = @"前进了0''";
-    _timeLab.font = [UIFont fontWithName:@"Arial Rounded MT Bold"  size:100];
+    _timeLab.text = @"前进了 0''";
+    _timeLab.font = [UIFont fontWithName:@"PledgeBlack"  size:100];
     
     
     [self.view addSubview:_timeLab];
@@ -308,11 +308,12 @@
     UIImage *img = [UIImage imageNamed:@"111"];
     UIImage *img1 = [UIImage imageNamed:@"444"];
     FirstViewController *firstVC = [[FirstViewController alloc]init];
-//    UIImage *resultImg = [self composeImg:img Img:img];
-//    UIImage *resultImg1 = [self composeImg1:img1 Img:img1];
-//    firstVC.img = resultImg;
-//    firstVC.img1 = resultImg1;
-//    [self presentViewController:firstVC animated:YES completion:nil];
+//    firstVC.VC = self;
+    UIImage *resultImg = [self composeImg:img Img:img];
+    UIImage *resultImg1 = [self composeImg1:img1 Img:img1];
+    firstVC.img = resultImg;
+    firstVC.img1 = resultImg1;
+    [self presentViewController:firstVC animated:YES completion:nil];
 //
     AVCaptureConnection * videoConnection = [self.ImageOutPut connectionWithMediaType:AVMediaTypeVideo];
     if (!videoConnection) {
@@ -332,6 +333,7 @@
         UIImage *resultImg1 = [self composeImg1:self.image Img:img1];
         firstVC.img = resultImg;
         firstVC.img1 = resultImg1;
+        
         [self presentViewController:firstVC animated:YES completion:nil];
         
 //        [self saveImageToPhotoAlbum:self.image];
@@ -552,9 +554,9 @@
     int MM = _num/60;
     int ss = _num%60;
     if (MM >0) {
-        _timeLab.text = [NSString stringWithFormat:@"前进了%d'%d''",MM,ss];
+        _timeLab.text = [NSString stringWithFormat:@"前进了 %d'%d''",MM,ss];
     }else
-        _timeLab.text = [NSString stringWithFormat:@"前进了%d''",ss];
+        _timeLab.text = [NSString stringWithFormat:@"前进了 %d''",ss];
 
     
     

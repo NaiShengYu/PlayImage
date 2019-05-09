@@ -7,12 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "ViewController.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FirstViewController : UIViewController
 @property(nonatomic,strong)UIImage *img;
 @property(nonatomic,strong)UIImage *img1;
+@property(nonatomic,weak)ViewController *VC;
+
+
 
 @end
 
