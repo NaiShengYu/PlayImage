@@ -308,13 +308,13 @@
     UIImage *img = [UIImage imageNamed:@"111"];
     UIImage *img1 = [UIImage imageNamed:@"444"];
     FirstViewController *firstVC = [[FirstViewController alloc]init];
-////    firstVC.VC = self;
-//    UIImage *resultImg = [self composeImg:img Img:img];
-//    UIImage *resultImg1 = [self composeImg1:img1 Img:img1];
-//    firstVC.img = resultImg;
-//    firstVC.img1 = resultImg1;
-//    [self presentViewController:firstVC animated:YES completion:nil];
-////
+//    firstVC.VC = self;
+    UIImage *resultImg = [self composeImg:img Img:img];
+    UIImage *resultImg1 = [self composeImg1:img1 Img:img1];
+    firstVC.img = resultImg;
+    firstVC.img1 = resultImg1;
+    [self presentViewController:firstVC animated:YES completion:nil];
+//
     AVCaptureConnection * videoConnection = [self.ImageOutPut connectionWithMediaType:AVMediaTypeVideo];
     if (!videoConnection) {
         NSLog(@"take photo failed!");
