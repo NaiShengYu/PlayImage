@@ -40,7 +40,11 @@
 @property (nonatomic)UIImage *image;
 
 @property (nonatomic)NSTimer *timer;
+@property (nonatomic)UILabel *timeLab;
+@property (nonatomic)UILabel *lab1;
+
 @property (nonatomic)BOOL canCa;
+@property (nonatomic)int num;
 @end
 
 @implementation ViewController
@@ -48,7 +52,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-
+    _num = 0;
     _canCa = [self canUserCamear];
     if (_canCa) {
         [self customCamera];
@@ -69,7 +73,26 @@
         [self.view addSubview:imgView];
     }
     
-
+    CGFloat o =550*kScreenWidth/imgSizeW;
+    CGFloat p =kScreenHeight-520*kScreenHeight/imgSizeH;
+    CGFloat r =320*kScreenWidth/imgSizeW;
+    CGFloat s =80*kScreenHeight/imgSizeH;
+    NSLog(@"o=%f/np=%f/nr=%f/ns=%f",o,p,r,s);
+    _lab1 = [[UILabel alloc]initWithFrame:CGRectMake(550*kScreenWidth/imgSizeW, kScreenHeight-520*kScreenHeight/imgSizeH, 320*kScreenWidth/imgSizeW, 80*kScreenHeight/imgSizeH)];
+    _lab1.textColor = [UIColor whiteColor];
+    _lab1.font = [UIFont fontWithName:@"Arial Rounded MT Bold"  size:100];
+    _lab1.adjustsFontSizeToFitWidth = YES;
+    _lab1.text = @"你向未来";
+    [self.view addSubview:_lab1];
+    
+    _timeLab = [[UILabel alloc]initWithFrame:CGRectMake(550*kScreenWidth/imgSizeW, kScreenHeight-420*kScreenHeight/imgSizeH, 320*kScreenWidth/imgSizeW, 80*kScreenHeight/imgSizeH)];
+    _timeLab.adjustsFontSizeToFitWidth = YES;
+    _timeLab.textColor = [UIColor whiteColor];
+    _timeLab.text = @"前进了0''";
+    _timeLab.font = [UIFont fontWithName:@"Arial Rounded MT Bold"  size:100];
+    
+    
+    [self.view addSubview:_timeLab];
   
 }
 
@@ -282,12 +305,15 @@
 - (void)shutterCamera
 {
     [_timer invalidate];
-
     UIImage *img = [UIImage imageNamed:@"111"];
+    UIImage *img1 = [UIImage imageNamed:@"444"];
     FirstViewController *firstVC = [[FirstViewController alloc]init];
-//    firstVC.img = img;
+//    UIImage *resultImg = [self composeImg:img Img:img];
+//    UIImage *resultImg1 = [self composeImg1:img1 Img:img1];
+//    firstVC.img = resultImg;
+//    firstVC.img1 = resultImg1;
 //    [self presentViewController:firstVC animated:YES completion:nil];
-    
+//
     AVCaptureConnection * videoConnection = [self.ImageOutPut connectionWithMediaType:AVMediaTypeVideo];
     if (!videoConnection) {
         NSLog(@"take photo failed!");
@@ -302,8 +328,10 @@
         self.image = [UIImage imageWithData:imageData];
         [self.session stopRunning];
         
-       UIImage *resultImg = [self composeImg:self.image Img:img];
+        UIImage *resultImg = [self composeImg:self.image Img:img];
+        UIImage *resultImg1 = [self composeImg1:self.image Img:img1];
         firstVC.img = resultImg;
+        firstVC.img1 = resultImg1;
         [self presentViewController:firstVC animated:YES completion:nil];
         
 //        [self saveImageToPhotoAlbum:self.image];
@@ -448,6 +476,12 @@
         [img drawInRect:CGRectMake(NumImageX+b , NumImageY, imgw,NumImageH)];
         b += (imgw);
     }
+   
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextDrawPath(context, kCGPathStroke);
+    [_lab1 drawTextInRect:CGRectMake(545/imgSizeW*w, h-520.0/imgSizeH*h, 300/imgSizeW*w, 90/imgSizeH*h)];
+    [_timeLab drawTextInRect:CGRectMake(545/imgSizeW*w, h-400.0/imgSizeH*h, 300/imgSizeW*w, 90/imgSizeH*h)];
+
     //获得一个位图图形上下文
     UIImage *resultImg = UIGraphicsGetImageFromCurrentImageContext();//从当前上下文中获得最终图片
     UIGraphicsEndImageContext();//关闭上下文
@@ -460,8 +494,69 @@
 //    CGImageRelease(imgRef1);
 }
 
+#pragma mark - 两张图合并成一张图
+- (UIImage *)composeImg1:(UIImage *)firstImage Img:(UIImage *)secondImage {
+    
+    CGFloat w = firstImage.size.width;
+    CGFloat h = firstImage.size.height;
+    
+    
+    //以firstImage的图大小为底图
+    //以firstImage的图大小为画布创建上下文
+    UIGraphicsBeginImageContext(CGSizeMake(w, h));
+    [firstImage drawInRect:CGRectMake(0,0, w, h)];//先把拍的照片画出来
+    
+    [secondImage drawInRect:CGRectMake(0, 0, w, h)];//把框子画出来
+    
+    NSDate *nowDate = [NSDate date];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"HH:mm:ss"];
+    NSString *datestr = [formatter stringFromDate:nowDate];
+    CGFloat NumImageX = w*310/1440.0;
+    CGFloat NumImageY = h*130/2560.0;
+    CGFloat NumImageH = h*140/2560.0;
+    CGFloat imgw = (800/1440.0*w)/datestr.length/1.0;
+    
+    CGFloat b = 0.0;
+    for (int i =0; i <datestr.length; i ++) {
+        NSString *numImgName =[datestr substringWithRange:NSMakeRange(i, 1)];
+        UIImage *img = [UIImage imageNamed:numImgName];
+        [img drawInRect:CGRectMake(NumImageX+b , NumImageY, imgw,NumImageH)];
+        b += (imgw);
+    }
+    //画文字
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextDrawPath(context, kCGPathStroke);
+    [_lab1 drawTextInRect:CGRectMake(480.0/1440.0*w, h-635.0/2560.0*h, 390/1440.0*w, 90/2560.0*h)];
+    [_timeLab drawTextInRect:CGRectMake(480/1440.0*w, h-480.0/2560.0*h, 390/1440.0*w, 90/2560.0*h)];
+    
+//    [_lab1 drawTextInRect:CGRectMake(370, h-480, 300, 70)];
+//    [_timeLab drawTextInRect:CGRectMake(370, h-380,300,70)];
+    //获得一个位图图形上下文
+    UIImage *resultImg = UIGraphicsGetImageFromCurrentImageContext();//从当前上下文中获得最终图片
+    UIGraphicsEndImageContext();//关闭上下文
+    return resultImg;
+    //    NSString *path = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+    //    NSString *filePath = [path stringByAppendingPathComponent:@"01.png"];
+    //    [UIImagePNGRepresentation(resultImg) writeToFile:filePath atomically:YES];//保存图片到沙盒
+    //
+    //    CGImageRelease(imgRef);
+    //    CGImageRelease(imgRef1);
+}
+
+
 #pragma mark - 定时器修改时间
 - (void)timeChange{
+    
+    _num +=1;
+    int MM = _num/60;
+    int ss = _num%60;
+    if (MM >0) {
+        _timeLab.text = [NSString stringWithFormat:@"前进了%d'%d''",MM,ss];
+    }else
+        _timeLab.text = [NSString stringWithFormat:@"前进了%d''",ss];
+
+    
     
     NSDate *nowDate = [NSDate date];
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];

@@ -20,6 +20,10 @@
 @interface FirstViewController ()
 
 @property (nonatomic,strong)UIImageView *QRCoreImageV;
+@property (nonatomic,strong)UIImageView *imageV1;
+@property (nonatomic,strong)UIButton *but;
+@property (nonatomic,strong)UIButton *but1;
+@property (nonatomic,strong)UIButton *but2;
 
 @end
 
@@ -32,21 +36,28 @@
     imageV.contentMode = UIViewContentModeScaleToFill;
     [self.view addSubview:imageV];
     
-    UIImageView * imageV1 = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"222"]];
-    imageV1.frame = CGRectMake(0, 0, kScreenWidth, kScreenHeight);
-    imageV1.contentMode = UIViewContentModeScaleToFill;
-    [self.view addSubview:imageV1];
+    _imageV1 = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"222"]];
+    _imageV1.frame = CGRectMake(0, 0, kScreenWidth, kScreenHeight);
+    _imageV1.contentMode = UIViewContentModeScaleToFill;
+    [self.view addSubview:_imageV1];
     
     
-    UIButton *but =[[UIButton alloc]initWithFrame:CGRectMake( kScreenWidth-465.0*kScreenWidth/imgSizeW, kScreenHeight-540*kScreenHeight/imgSizeH, 390*kScreenWidth/imgSizeW, 105*kScreenHeight/imgSizeH)];
-    [but addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:but];
+    _but =[[UIButton alloc]initWithFrame:CGRectMake( kScreenWidth-465.0*kScreenWidth/imgSizeW, kScreenHeight-540*kScreenHeight/imgSizeH, 390*kScreenWidth/imgSizeW, 105*kScreenHeight/imgSizeH)];
+    [_but addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_but];
     
-    UIButton *but1 =[[UIButton alloc]initWithFrame:CGRectMake( kScreenWidth-465.0*kScreenWidth/imgSizeW, kScreenHeight-410*kScreenHeight/imgSizeH, 390*kScreenWidth/imgSizeW, 105*kScreenHeight/imgSizeH)];
-    [but1 addTarget:self action:@selector(upImage:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:but1];
+    _but1 =[[UIButton alloc]initWithFrame:CGRectMake( kScreenWidth-465.0*kScreenWidth/imgSizeW, kScreenHeight-410*kScreenHeight/imgSizeH, 390*kScreenWidth/imgSizeW, 105*kScreenHeight/imgSizeH)];
+    [_but1 addTarget:self action:@selector(upImage:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_but1];
     
-    _QRCoreImageV = [[UIImageView alloc]initWithFrame:CGRectMake(kScreenWidth-376.0*kScreenWidth/imgSizeW, kScreenHeight-(852)*kScreenHeight/imgSizeH, 220*kScreenWidth/imgSizeW, 220*kScreenWidth/imgSizeW)];
+    _but2 =[[UIButton alloc]initWithFrame:CGRectMake( kScreenWidth-110, 30, 70, 70)];
+    [_but2 addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+    [_but2 setImage:[UIImage imageNamed:@"cancel"] forState:UIControlStateNormal];
+    _but2.hidden = YES;
+    [self.view addSubview:_but2];
+    
+    
+    _QRCoreImageV = [[UIImageView alloc]initWithFrame:CGRectMake(kScreenWidth-380.0*kScreenWidth/imgSizeW, kScreenHeight-(570)*kScreenHeight/imgSizeH, 250*kScreenWidth/imgSizeW, 250*kScreenWidth/imgSizeW)];
     [self.view addSubview:_QRCoreImageV];
     
     
@@ -63,12 +74,12 @@
     but.enabled = NO;
     [SVProgressHUD showWithStatus:@"上传中。。。"];
     WS(blockSelf);
-    NSString *url = @"http://f.jianxinnet.com/cmj/api.php";
+    NSString *url = @"http://cmj.diamond-sh.com/api.php";
     NSMutableDictionary *param = [[NSMutableDictionary alloc]init];
     [param setObject:@"img_upload" forKey:@"app"];
     [param setObject:@"img" forKey:@"img"];
 
-    NSData *data =[self compressQualityWithMaxLength:500*1024 img:self.img];
+    NSData *data =[self compressQualityWithMaxLength:500*1024 img:self.img1];
     NSLog(@"上传的长度=%f",data.length/2014.0);
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer =[AFHTTPResponseSerializer serializer];
@@ -88,7 +99,10 @@
         
         self.QRCoreImageV.image = [self createQRCodeWithData:resultDic[@"data"] logoImage:nil imageSize:500];
         but.enabled = YES;
-
+        self.imageV1.hidden = YES;
+        self.but.hidden = YES;
+        self.but1.hidden = YES;
+        self.but2.hidden = NO;
         [SVProgressHUD dismiss];
 
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {

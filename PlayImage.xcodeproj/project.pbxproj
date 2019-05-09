@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2006C9CFCD76994F5D5CCA20 /* libPods-PlayImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EC1A6711F9A83B3F8D6F1FF /* libPods-PlayImage.a */; };
+		C93A926222841BC70096C19D /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C93A926122841BC70096C19D /* SecondViewController.m */; };
 		C955425A227EABCC00725AD3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C9554259227EABCC00725AD3 /* AppDelegate.m */; };
 		C955425D227EABCC00725AD3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C955425C227EABCC00725AD3 /* ViewController.m */; };
 		C9554260227EABCC00725AD3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C955425E227EABCC00725AD3 /* Main.storyboard */; };
@@ -40,6 +41,8 @@
 		455C59C3D0348A66A30E55E3 /* Pods-PlayImage.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlayImage.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PlayImage/Pods-PlayImage.debug.xcconfig"; sourceTree = "<group>"; };
 		7EC1A6711F9A83B3F8D6F1FF /* libPods-PlayImage.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PlayImage.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C51244D8F84C8B92442F8672 /* Pods-PlayImage.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlayImage.release.xcconfig"; path = "Pods/Target Support Files/Pods-PlayImage/Pods-PlayImage.release.xcconfig"; sourceTree = "<group>"; };
+		C93A926022841BC70096C19D /* SecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
+		C93A926122841BC70096C19D /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
 		C9554255227EABCC00725AD3 /* PlayImage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlayImage.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9554258227EABCC00725AD3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C9554259227EABCC00725AD3 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -139,6 +142,8 @@
 				C9554263227EABCD00725AD3 /* LaunchScreen.storyboard */,
 				C9554266227EABCD00725AD3 /* Info.plist */,
 				C9554267227EABCD00725AD3 /* main.m */,
+				C93A926022841BC70096C19D /* SecondViewController.h */,
+				C93A926122841BC70096C19D /* SecondViewController.m */,
 			);
 			path = PlayImage;
 			sourceTree = "<group>";
@@ -332,6 +337,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C93A926222841BC70096C19D /* SecondViewController.m in Sources */,
 				C955425D227EABCC00725AD3 /* ViewController.m in Sources */,
 				C9554268227EABCD00725AD3 /* main.m in Sources */,
 				C955425A227EABCC00725AD3 /* AppDelegate.m in Sources */,

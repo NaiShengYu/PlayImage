@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import <AFNetworking.h>
+#import "SecondViewController.h"
 @interface AppDelegate ()
 
 @end
@@ -25,7 +26,9 @@
         }else{
         }}];
     
-    
+    _window =[[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
+    [_window makeKeyAndVisible];
+    _window.rootViewController =[[SecondViewController alloc]init];
     return YES;
 }
 
