@@ -35,6 +35,7 @@
 @property (nonatomic)UIButton *PhotoButton;
 @property (nonatomic)UIButton *flashButton;
 @property (nonatomic)UIImageView *imageView;
+@property (nonatomic)UIImageView *imageV1;
 @property (nonatomic)UIView *focusView;
 @property (nonatomic)BOOL isflashOn;
 @property (nonatomic)UIImage *image;
@@ -43,6 +44,7 @@
 @property (nonatomic)UILabel *timeLab;
 @property (nonatomic)UILabel *lab1;
 
+@property (nonatomic,copy)NSString *lastTime;
 @property (nonatomic)BOOL canCa;
 @property (nonatomic)int num;
 @end
@@ -67,31 +69,31 @@
     imageV.contentMode = UIViewContentModeScaleToFill;
     [self.view addSubview:imageV];
     
+    _imageV1 = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"duolaameng"]];
+    self.imageV1.frame = CGRectMake(1100/imgSizeW*kScreenWidth, 900.0/imgSizeH*kScreenHeight, 301*kScreenWidth/imgSizeW, 385*kScreenHeight/imgSizeH);
+    _imageV1.contentMode = UIViewContentModeScaleToFill;
+    [self.view addSubview:_imageV1];
+    
+  
+    
     for (int i = 0; i <8; i ++) {
         UIImageView *imgView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 0, 0)];
         imgView.tag = i+1000;
         [self.view addSubview:imgView];
     }
     
-    CGFloat o =550*kScreenWidth/imgSizeW;
-    CGFloat p =kScreenHeight-520*kScreenHeight/imgSizeH;
-    CGFloat r =320*kScreenWidth/imgSizeW;
-    CGFloat s =80*kScreenHeight/imgSizeH;
-    NSLog(@"o=%f/np=%f/nr=%f/ns=%f",o,p,r,s);
-    _lab1 = [[UILabel alloc]initWithFrame:CGRectMake(550*kScreenWidth/imgSizeW, kScreenHeight-520*kScreenHeight/imgSizeH, 320*kScreenWidth/imgSizeW, 80*kScreenHeight/imgSizeH)];
+    _lab1 = [[UILabel alloc]initWithFrame:CGRectMake(580*kScreenWidth/imgSizeW, kScreenHeight-640*kScreenHeight/imgSizeH, 270*kScreenWidth/imgSizeW, 100*kScreenHeight/imgSizeH)];
     _lab1.textColor = [UIColor whiteColor];
     _lab1.font = [UIFont fontWithName:@"PledgeBlack"  size:100];
     _lab1.adjustsFontSizeToFitWidth = YES;
     _lab1.text = @"你向未来";
     [self.view addSubview:_lab1];
     
-    _timeLab = [[UILabel alloc]initWithFrame:CGRectMake(550*kScreenWidth/imgSizeW, kScreenHeight-420*kScreenHeight/imgSizeH, 320*kScreenWidth/imgSizeW, 80*kScreenHeight/imgSizeH)];
+    _timeLab = [[UILabel alloc]initWithFrame:CGRectMake(580*kScreenWidth/imgSizeW, kScreenHeight-540*kScreenHeight/imgSizeH, 270*kScreenWidth/imgSizeW, 100*kScreenHeight/imgSizeH)];
     _timeLab.adjustsFontSizeToFitWidth = YES;
     _timeLab.textColor = [UIColor whiteColor];
     _timeLab.text = @"前进了 0''";
     _timeLab.font = [UIFont fontWithName:@"PledgeBlack"  size:100];
-    
-    
     [self.view addSubview:_timeLab];
   
 }
@@ -102,11 +104,15 @@
     [self.session stopRunning];
 
 }
+
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.session startRunning];
     _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeChange) userInfo:nil repeats:YES];
     [_timer fire];
+    
+    
+    
 }
 
 - (void)customUI{
@@ -305,15 +311,16 @@
 - (void)shutterCamera
 {
     [_timer invalidate];
-    UIImage *img = [UIImage imageNamed:@"111"];
+    UIImage *img = [UIImage imageNamed:@"222"];
     UIImage *img1 = [UIImage imageNamed:@"444"];
     FirstViewController *firstVC = [[FirstViewController alloc]init];
-//    firstVC.VC = self;
-    UIImage *resultImg = [self composeImg:img Img:img];
-    UIImage *resultImg1 = [self composeImg1:img1 Img:img1];
-    firstVC.img = resultImg;
-    firstVC.img1 = resultImg1;
-    [self presentViewController:firstVC animated:YES completion:nil];
+////    firstVC.VC = self;
+//    UIImage *resultImg1 = [self composeImg1:img1 Img:img1];
+//    firstVC.img = img;
+//    firstVC.img1 = resultImg1;
+//    firstVC.lastTime = self.lastTime;
+//    firstVC.num = self.timeLab.text;
+//    [self presentViewController:firstVC animated:YES completion:nil];
 //
     AVCaptureConnection * videoConnection = [self.ImageOutPut connectionWithMediaType:AVMediaTypeVideo];
     if (!videoConnection) {
@@ -329,20 +336,13 @@
         self.image = [UIImage imageWithData:imageData];
         [self.session stopRunning];
         
-        UIImage *resultImg = [self composeImg:self.image Img:img];
         UIImage *resultImg1 = [self composeImg1:self.image Img:img1];
-        firstVC.img = resultImg;
+        firstVC.img = self.image;
         firstVC.img1 = resultImg1;
-        
+        firstVC.lastTime = self.lastTime;
+        firstVC.num = self.timeLab.text;
         [self presentViewController:firstVC animated:YES completion:nil];
-        
-//        [self saveImageToPhotoAlbum:self.image];
-//        self.imageView = [[UIImageView alloc]initWithFrame:self.previewLayer.frame];
-//        [self.view insertSubview:_imageView belowSubview:_PhotoButton];
-//        self.imageView.layer.masksToBounds = YES;
-//        self.imageView.image = _image;
-//        NSLog(@"image size = %@",NSStringFromCGSize(self.image.size));
-    }];
+      }];
 }
 #pragma - 保存至相册
 - (void)saveImageToPhotoAlbum:(UIImage*)savedImage
@@ -446,63 +446,12 @@
     UIGraphicsEndImageContext();
     return image;
 }
-
-
-#pragma mark - 两张图合并成一张图
-- (UIImage *)composeImg:(UIImage *)firstImage Img:(UIImage *)secondImage {
-
-    CGFloat w = firstImage.size.width;
-    CGFloat h = firstImage.size.height;
-    
-    
-    //以firstImage的图大小为底图
-    //以firstImage的图大小为画布创建上下文
-    UIGraphicsBeginImageContext(CGSizeMake(w, h));
-    [firstImage drawInRect:CGRectMake(0,0, w, h)];//先把拍的照片画出来
-
-    [secondImage drawInRect:CGRectMake(0, 0, w, h)];//把框子画出来
-    
-    NSDate *nowDate = [NSDate date];
-    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-    [formatter setDateFormat:@"HH:mm:ss"];
-    NSString *datestr = [formatter stringFromDate:nowDate];
-    CGFloat NumImageX = w*430/imgSizeW;
-    CGFloat NumImageY = h*100/imgSizeH;
-    CGFloat NumImageH = h*120/imgSizeH;
-    CGFloat imgw = (660.0/imgSizeW*w)/datestr.length/1.0;
-
-    CGFloat b = 0.0;
-    for (int i =0; i <datestr.length; i ++) {
-        NSString *numImgName =[datestr substringWithRange:NSMakeRange(i, 1)];
-        UIImage *img = [UIImage imageNamed:numImgName];
-        [img drawInRect:CGRectMake(NumImageX+b , NumImageY, imgw,NumImageH)];
-        b += (imgw);
-    }
-   
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextDrawPath(context, kCGPathStroke);
-    [_lab1 drawTextInRect:CGRectMake(545/imgSizeW*w, h-520.0/imgSizeH*h, 300/imgSizeW*w, 90/imgSizeH*h)];
-    [_timeLab drawTextInRect:CGRectMake(545/imgSizeW*w, h-400.0/imgSizeH*h, 300/imgSizeW*w, 90/imgSizeH*h)];
-
-    //获得一个位图图形上下文
-    UIImage *resultImg = UIGraphicsGetImageFromCurrentImageContext();//从当前上下文中获得最终图片
-    UIGraphicsEndImageContext();//关闭上下文
-    return resultImg;
-//    NSString *path = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
-//    NSString *filePath = [path stringByAppendingPathComponent:@"01.png"];
-//    [UIImagePNGRepresentation(resultImg) writeToFile:filePath atomically:YES];//保存图片到沙盒
-//
-//    CGImageRelease(imgRef);
-//    CGImageRelease(imgRef1);
-}
-
 #pragma mark - 两张图合并成一张图
 - (UIImage *)composeImg1:(UIImage *)firstImage Img:(UIImage *)secondImage {
     
     CGFloat w = firstImage.size.width;
     CGFloat h = firstImage.size.height;
     
-    
     //以firstImage的图大小为底图
     //以firstImage的图大小为画布创建上下文
     UIGraphicsBeginImageContext(CGSizeMake(w, h));
@@ -514,23 +463,29 @@
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     [formatter setDateFormat:@"HH:mm:ss"];
     NSString *datestr = [formatter stringFromDate:nowDate];
-    CGFloat NumImageX = w*310/1440.0;
-    CGFloat NumImageY = h*130/2560.0;
-    CGFloat NumImageH = h*140/2560.0;
-    CGFloat imgw = (800/1440.0*w)/datestr.length/1.0;
+    CGFloat NumImageX = w*370/1440.0;
+    CGFloat NumImageY = h*155/2560.0;
+    CGFloat NumImageH = h*125/2560.0;
+    CGFloat imgw = (700/1440.0*w)/(datestr.length-1)/1.0;
     
     CGFloat b = 0.0;
     for (int i =0; i <datestr.length; i ++) {
         NSString *numImgName =[datestr substringWithRange:NSMakeRange(i, 1)];
         UIImage *img = [UIImage imageNamed:numImgName];
-        [img drawInRect:CGRectMake(NumImageX+b , NumImageY, imgw,NumImageH)];
-        b += (imgw);
+        if ([numImgName  isEqual:@":"]) {
+            [img drawInRect:CGRectMake(NumImageX+b , NumImageY+20, imgw/2,NumImageH-20)];
+            b += (imgw/2);
+        }else
+        {
+            [img drawInRect:CGRectMake(NumImageX+b , NumImageY, imgw,NumImageH)];
+            b += (imgw);
+        }
     }
     //画文字
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextDrawPath(context, kCGPathStroke);
-    [_lab1 drawTextInRect:CGRectMake(480.0/1440.0*w, h-635.0/2560.0*h, 390/1440.0*w, 90/2560.0*h)];
-    [_timeLab drawTextInRect:CGRectMake(480/1440.0*w, h-480.0/2560.0*h, 390/1440.0*w, 90/2560.0*h)];
+    [_lab1 drawTextInRect:CGRectMake(560.0/1440.0*w, h-620.0/2560.0*h, 240/1440.0*w, 100/2560.0*h)];
+    [_timeLab drawTextInRect:CGRectMake(560.0/1440.0*w, h-520.0/2560.0*h, 240/1440.0*w, 100/2560.0*h)];
     
 //    [_lab1 drawTextInRect:CGRectMake(370, h-480, 300, 70)];
 //    [_timeLab drawTextInRect:CGRectMake(370, h-380,300,70)];
@@ -538,17 +493,35 @@
     UIImage *resultImg = UIGraphicsGetImageFromCurrentImageContext();//从当前上下文中获得最终图片
     UIGraphicsEndImageContext();//关闭上下文
     return resultImg;
-    //    NSString *path = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
-    //    NSString *filePath = [path stringByAppendingPathComponent:@"01.png"];
-    //    [UIImagePNGRepresentation(resultImg) writeToFile:filePath atomically:YES];//保存图片到沙盒
-    //
-    //    CGImageRelease(imgRef);
-    //    CGImageRelease(imgRef1);
+  
 }
 
 
 #pragma mark - 定时器修改时间
 - (void)timeChange{
+    
+    if (_num%3 ==0) {
+        [UIView animateWithDuration:1.5 animations:^{
+            self.imageV1.frame = CGRectMake(1086/imgSizeW*kScreenWidth, 750/imgSizeH*kScreenHeight, 301*kScreenWidth/imgSizeW, 385*kScreenHeight/imgSizeH);
+            [UIView setAnimationRepeatCount:4];
+            
+        } completion:^(BOOL finished) {
+            [UIView animateWithDuration:1.5 animations:^{
+                self.imageV1.frame = CGRectMake(1100/imgSizeW*kScreenWidth, 900.0/imgSizeH*kScreenHeight, 301*kScreenWidth/imgSizeW, 385*kScreenHeight/imgSizeH);
+
+            }];
+        }];
+    }
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        self.imageV1.bounds = CGRectMake(1076/imgSizeW*kScreenWidth, 620/imgSizeH*kScreenHeight, 320*kScreenWidth/imgSizeW, 385*kScreenHeight/imgSizeH);
+        [UIView setAnimationRepeatCount:4];
+        
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.5 animations:^{
+            self.imageV1.bounds = CGRectMake(1100/imgSizeW*kScreenWidth, 900.0/imgSizeH*kScreenHeight, 301*kScreenWidth/imgSizeW, 385*kScreenHeight/imgSizeH);
+        }];
+    }];
     
     _num +=1;
     int MM = _num/60;
@@ -558,27 +531,34 @@
     }else
         _timeLab.text = [NSString stringWithFormat:@"前进了 %d''",ss];
 
-    
+
     
     NSDate *nowDate = [NSDate date];
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     [formatter setDateFormat:@"HH:mm:ss"];
     NSString *datestr = [formatter stringFromDate:nowDate];
-    
+    self.lastTime = datestr;
     CGFloat NumImageX = kScreenWidth*430/imgSizeW;
-    CGFloat NumImageY = kScreenHeight*100/imgSizeH;
+    CGFloat NumImageY = kScreenHeight*170/imgSizeH;
     CGFloat NumImageH = kScreenHeight*120/imgSizeH;
 
     CGFloat b = 0.0;
-    CGFloat imgw =(660.0/imgSizeW*kScreenWidth)/datestr.length/1.0;
+    CGFloat imgw =(660.0/imgSizeW*kScreenWidth)/(datestr.length-1)/1.0;
     for (int i =0; i <datestr.length; i ++) {
         UIImageView *imgV = [self.view viewWithTag:i+1000];
         NSString *numImgName =[datestr substringWithRange:NSMakeRange(i, 1)];
         
         UIImage *img = [UIImage imageNamed:numImgName];
         imgV.image = img;
-        imgV.frame =CGRectMake(NumImageX+b , NumImageY, imgw,NumImageH);
-        b += (imgw);
+        if ([numImgName  isEqual:@":"]) {
+            imgV.frame =CGRectMake(NumImageX+b , NumImageY+20, imgw/2,NumImageH-20);
+            b += (imgw/2);
+        }else
+        {
+            imgV.frame =CGRectMake(NumImageX+b , NumImageY, imgw,NumImageH);
+            b += (imgw);
+        }
+        
     }
     
 }

@@ -25,32 +25,82 @@
 @property (nonatomic,strong)UIButton *but1;
 @property (nonatomic,strong)UIButton *but2;
 
+@property (nonatomic)UILabel *timeLab;
+@property (nonatomic)UILabel *lab1;
 @end
 
 @implementation FirstViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UIImageView * imageV = [[UIImageView alloc]initWithImage:self.img];
+    UIImageView * imageVN = [[UIImageView alloc]initWithImage:self.img];
+    imageVN.frame = CGRectMake(0, 0, kScreenWidth, kScreenHeight);
+    imageVN.contentMode = UIViewContentModeScaleToFill;
+    [self.view addSubview:imageVN];
+    
+    UIImageView * imageV = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"222"]];
     imageV.frame = CGRectMake(0, 0, kScreenWidth, kScreenHeight);
     imageV.contentMode = UIViewContentModeScaleToFill;
     [self.view addSubview:imageV];
     
-    _imageV1 = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"222"]];
-    _imageV1.frame = CGRectMake(0, 0, kScreenWidth, kScreenHeight);
-    _imageV1.contentMode = UIViewContentModeScaleToFill;
-    [self.view addSubview:_imageV1];
     
+    CGFloat NumImageX = kScreenWidth*430/imgSizeW;
+    CGFloat NumImageY = kScreenHeight*170/imgSizeH;
+    CGFloat NumImageH = kScreenHeight*120/imgSizeH;
     
-    _but =[[UIButton alloc]initWithFrame:CGRectMake( kScreenWidth-465.0*kScreenWidth/imgSizeW, kScreenHeight-540*kScreenHeight/imgSizeH, 390*kScreenWidth/imgSizeW, 105*kScreenHeight/imgSizeH)];
+    CGFloat b = 0.0;
+    CGFloat imgw =(660.0/imgSizeW*kScreenWidth)/(self.lastTime.length-1)/1.0;
+    for (int i =0; i <self.lastTime.length; i ++) {
+        UIImageView *imgV = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 0, 0)];
+        [self.view addSubview:imgV];
+        NSString *numImgName =[self.lastTime substringWithRange:NSMakeRange(i, 1)];
+        
+        UIImage *img = [UIImage imageNamed:numImgName];
+        imgV.image = img;
+        if ([numImgName  isEqual:@":"]) {
+            imgV.frame =CGRectMake(NumImageX+b , NumImageY+20, imgw/2,NumImageH-20);
+            b += (imgw/2);
+        }else
+        {
+            imgV.frame =CGRectMake(NumImageX+b , NumImageY, imgw,NumImageH);
+            b += (imgw);
+        }
+    }
+  
+    
+    _lab1 = [[UILabel alloc]initWithFrame:CGRectMake(580*kScreenWidth/imgSizeW, kScreenHeight-640*kScreenHeight/imgSizeH, 270*kScreenWidth/imgSizeW, 100*kScreenHeight/imgSizeH)];
+    _lab1.textColor = [UIColor whiteColor];
+    _lab1.font = [UIFont fontWithName:@"PledgeBlack"  size:100];
+    _lab1.adjustsFontSizeToFitWidth = YES;
+    _lab1.text = @"你向未来";
+    [self.view addSubview:_lab1];
+    
+    _timeLab = [[UILabel alloc]initWithFrame:CGRectMake(580*kScreenWidth/imgSizeW, kScreenHeight-540*kScreenHeight/imgSizeH, 270*kScreenWidth/imgSizeW, 100*kScreenHeight/imgSizeH)];
+    _timeLab.adjustsFontSizeToFitWidth = YES;
+    _timeLab.textColor = [UIColor whiteColor];
+    _timeLab.text = self.num;
+    _timeLab.font = [UIFont fontWithName:@"PledgeBlack"  size:100];
+    [self.view addSubview:_timeLab];
+    
+  
+    
+    _but =[[UIButton alloc]init];
+    _but.center = CGPointMake(kScreenWidth/2, kScreenHeight/2-138/imgSizeH*kScreenHeight*2-30);
+    _but.bounds = CGRectMake(0, 0, 570/imgSizeW*kScreenWidth/1.0, 138/imgSizeH*kScreenHeight);
+    [_but setImage:[UIImage imageNamed:@"chongpai"] forState:UIControlStateNormal];
     [_but addTarget:self action:@selector(back1) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_but];
     
-    _but1 =[[UIButton alloc]initWithFrame:CGRectMake( kScreenWidth-465.0*kScreenWidth/imgSizeW, kScreenHeight-410*kScreenHeight/imgSizeH, 390*kScreenWidth/imgSizeW, 105*kScreenHeight/imgSizeH)];
+    
+    
+    _but1 =[[UIButton alloc]init];
+    _but1.center = CGPointMake(kScreenWidth/2, kScreenHeight/2-138/imgSizeH*kScreenHeight);
+    _but1.bounds = CGRectMake(0, 0, 570/imgSizeW*kScreenWidth/1.0, 138/imgSizeH*kScreenHeight);
+    [_but1 setImage:[UIImage imageNamed:@"queding"] forState:UIControlStateNormal];
     [_but1 addTarget:self action:@selector(upImage:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_but1];
     
-    _but2 =[[UIButton alloc]initWithFrame:CGRectMake( kScreenWidth-110, 30, 70, 70)];
+    _but2 =[[UIButton alloc]initWithFrame:CGRectMake( kScreenWidth-150*kScreenWidth /imgSizeW, 60*kScreenHeight/imgSizeH, 90*kScreenHeight/imgSizeH, 90*kScreenHeight/imgSizeH)];
     [_but2 addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     [_but2 setImage:[UIImage imageNamed:@"cancel"] forState:UIControlStateNormal];
     _but2.hidden = YES;

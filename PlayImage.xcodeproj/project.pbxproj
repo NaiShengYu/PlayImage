@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2006C9CFCD76994F5D5CCA20 /* libPods-PlayImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EC1A6711F9A83B3F8D6F1FF /* libPods-PlayImage.a */; };
+		264190112286E06600DF6BC4 /* HOME0511BB.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 264190102286E06600DF6BC4 /* HOME0511BB.mp4 */; };
 		2641A9A7228457C70042EDCF /* PLEDG_KI.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 2641A9A6228457C70042EDCF /* PLEDG_KI.TTF */; };
 		C93A926222841BC70096C19D /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C93A926122841BC70096C19D /* SecondViewController.m */; };
 		C955425A227EABCC00725AD3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C9554259227EABCC00725AD3 /* AppDelegate.m */; };
@@ -39,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		264190102286E06600DF6BC4 /* HOME0511BB.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = HOME0511BB.mp4; sourceTree = "<group>"; };
 		2641A9A6228457C70042EDCF /* PLEDG_KI.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = PLEDG_KI.TTF; sourceTree = "<group>"; };
 		455C59C3D0348A66A30E55E3 /* Pods-PlayImage.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlayImage.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PlayImage/Pods-PlayImage.debug.xcconfig"; sourceTree = "<group>"; };
 		7EC1A6711F9A83B3F8D6F1FF /* libPods-PlayImage.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PlayImage.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -133,6 +135,7 @@
 		C9554257227EABCC00725AD3 /* PlayImage */ = {
 			isa = PBXGroup;
 			children = (
+				264190102286E06600DF6BC4 /* HOME0511BB.mp4 */,
 				2641A9A6228457C70042EDCF /* PLEDG_KI.TTF */,
 				C9554258227EABCC00725AD3 /* AppDelegate.h */,
 				C9554259227EABCC00725AD3 /* AppDelegate.m */,
@@ -278,6 +281,7 @@
 				C9554262227EABCD00725AD3 /* Assets.xcassets in Resources */,
 				C9554260227EABCC00725AD3 /* Main.storyboard in Resources */,
 				2641A9A7228457C70042EDCF /* PLEDG_KI.TTF in Resources */,
+				264190112286E06600DF6BC4 /* HOME0511BB.mp4 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
