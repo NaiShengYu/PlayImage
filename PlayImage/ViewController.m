@@ -69,11 +69,11 @@
     imageV.contentMode = UIViewContentModeScaleToFill;
     [self.view addSubview:imageV];
     
-    _imageV1 = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"duolaameng"]];
-    self.imageV1.frame = CGRectMake(1100/imgSizeW*kScreenWidth, 900.0/imgSizeH*kScreenHeight, 301*kScreenWidth/imgSizeW, 385*kScreenHeight/imgSizeH);
-    _imageV1.contentMode = UIViewContentModeScaleToFill;
-    [self.view addSubview:_imageV1];
-    
+//    _imageV1 = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"duolaameng"]];
+//    self.imageV1.frame = CGRectMake(1100/imgSizeW*kScreenWidth, 900.0/imgSizeH*kScreenHeight, 301*kScreenWidth/imgSizeW, 385*kScreenHeight/imgSizeH);
+//    _imageV1.contentMode = UIViewContentModeScaleToFill;
+//    [self.view addSubview:_imageV1];
+//
   
     
     for (int i = 0; i <8; i ++) {
@@ -499,29 +499,29 @@
 
 #pragma mark - 定时器修改时间
 - (void)timeChange{
-    
-    if (_num%3 ==0) {
-        [UIView animateWithDuration:1.5 animations:^{
-            self.imageV1.frame = CGRectMake(1086/imgSizeW*kScreenWidth, 750/imgSizeH*kScreenHeight, 301*kScreenWidth/imgSizeW, 385*kScreenHeight/imgSizeH);
-            [UIView setAnimationRepeatCount:4];
-            
-        } completion:^(BOOL finished) {
-            [UIView animateWithDuration:1.5 animations:^{
-                self.imageV1.frame = CGRectMake(1100/imgSizeW*kScreenWidth, 900.0/imgSizeH*kScreenHeight, 301*kScreenWidth/imgSizeW, 385*kScreenHeight/imgSizeH);
-
-            }];
-        }];
-    }
-    
-    [UIView animateWithDuration:0.5 animations:^{
-        self.imageV1.bounds = CGRectMake(1076/imgSizeW*kScreenWidth, 620/imgSizeH*kScreenHeight, 320*kScreenWidth/imgSizeW, 385*kScreenHeight/imgSizeH);
-        [UIView setAnimationRepeatCount:4];
-        
-    } completion:^(BOOL finished) {
-        [UIView animateWithDuration:0.5 animations:^{
-            self.imageV1.bounds = CGRectMake(1100/imgSizeW*kScreenWidth, 900.0/imgSizeH*kScreenHeight, 301*kScreenWidth/imgSizeW, 385*kScreenHeight/imgSizeH);
-        }];
-    }];
+//
+//    if (_num%3 ==0) {
+//        [UIView animateWithDuration:1.5 animations:^{
+//            self.imageV1.frame = CGRectMake(1086/imgSizeW*kScreenWidth, 750/imgSizeH*kScreenHeight, 301*kScreenWidth/imgSizeW, 385*kScreenHeight/imgSizeH);
+//            [UIView setAnimationRepeatCount:4];
+//
+//        } completion:^(BOOL finished) {
+//            [UIView animateWithDuration:1.5 animations:^{
+//                self.imageV1.frame = CGRectMake(1100/imgSizeW*kScreenWidth, 900.0/imgSizeH*kScreenHeight, 301*kScreenWidth/imgSizeW, 385*kScreenHeight/imgSizeH);
+//
+//            }];
+//        }];
+//    }
+//
+//    [UIView animateWithDuration:0.5 animations:^{
+//        self.imageV1.bounds = CGRectMake(1076/imgSizeW*kScreenWidth, 620/imgSizeH*kScreenHeight, 320*kScreenWidth/imgSizeW, 385*kScreenHeight/imgSizeH);
+//        [UIView setAnimationRepeatCount:4];
+//
+//    } completion:^(BOOL finished) {
+//        [UIView animateWithDuration:0.5 animations:^{
+//            self.imageV1.bounds = CGRectMake(1100/imgSizeW*kScreenWidth, 900.0/imgSizeH*kScreenHeight, 301*kScreenWidth/imgSizeW, 385*kScreenHeight/imgSizeH);
+//        }];
+//    }];
     
     _num +=1;
     int MM = _num/60;
